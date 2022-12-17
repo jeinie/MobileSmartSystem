@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pahomqtt/1.0.2/mqttws31.min.js" type="text/javascript"></script>
+    <script src="../static/mqttio.js" type="text/javascript"></script>
+    <script src="../static/face.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="../static/myStyle.css">
+    <title>버스 내 혼잡도</title>
+    <script>
+        window.addEventListener("load", function () {
+        var url = new String(document.location);
+        ip = (url.split("//"))[1]; // ip = "224...:8080/"
+        ip = (ip.split(":"))[0]; // ip = "224..."
+        document.getElementById("broker").value = ip
+        });
+    </script>
+</head>
+<body>
+    <div class="entire" id="ent">
+        <h2 class="layer">버스 내 혼잡도</h2>
+        <hr>
+        <form id="bus">
+            <b>브로커 IP:</b>
+            <input id="broker" type="text" name="broker" value=""><br><br>
+            <b>포트 번호 : 9001</b><br><br>
+            <input class="btn" type="button" style="width: 100px; height: 25px; font-size: 15px;" onclick="startConnect()" value="Connect">
+            <input class="btn" type="button" style="width: 100px; height: 25px; font-size: 15px;" onclick="startDisconnect()" value="Disconnect"><br><br>
+            <div id="connect"></div>
+        </form>
+        <hr>
+        <b style="font-size: 1.3em;">버스 내 허용 인원 수</b><br><br>
+        <form id="permission-form">
+            <input id="permit" type="text">
+            <!-- 확인 버튼을 누르면 submit1() 함수 호출 -->
+            <input id="button" type="button" value="확인" onclick="submit1()"><br><br><br>
+        </form>
+        <!-- 시작 버튼을 누르면 start() 함수 호출 -->
+        <input id="start" type="button" value="시작" onclick="start()"><br><br>
+        <b style="font-size: 1.2em;">현재 인원수</b>
+        <div id="current">0</div><br><br> <!-- 현재 인원수 값 표시 -->
+        <b style="font-size: 1.2em;">앞으로 탑승 가능한 인원수</b>
+        <div id="possible">0</div><br><br> <!-- 탑승 가능한 인원수 값 표시 -->
+        <b style="color: rgb(238, 108, 108); font-size: 1.3em;">혼잡도</b><br><br>
+        <div id="congestion"></div>
+        <!-- 혼잡도 표시(그림) -->
+        <canvas id="myCanvas1" width="200" height="50"></canvas>
+        <hr>
+        <b style="color: rgb(27, 133, 127); font-size: 1.3em;">온도</b>
+        <form id="temperature-form">
+        <!-- 측정 버튼을 누르면 'temperature'토픽으로 mqtt 브로커에서 메시지를 기다린다 -->
+        <input class="btn" type="button" onclick="subscribe('temperature')"
+        value="측정">
+        <!-- 중단 버튼을 누르면 'temperature'토픽을 mqtt 브로커에서 지운다 -->
+        <input class="btn" type="button"
+        onclick="unsubscribe('temperature')" value="중단">
+        </form>
+        <!-- 온도값을 출력 -->
+        <div id="temp_message" style="font-size: 1.1em;"></div>
+        <br><br>
+
+        <b style="color: rgb(27, 133, 127); font-size: 1.3em;">습도</b>
+        <form id="humidity-form">
+            <!-- 측정 버튼을 누르면 'humidity'토픽으로 mqtt 브로커에서 메시지를 기다린다 -->
+            <input class="btn" type="button" onclick="subscribe('humidity')" value="측정">
+            <!-- 중단 버튼을 누르면 'humidity'토픽을 mqtt 브로커에서 지운다 -->
+            <input class="btn" type="button" onclick="unsubscribe('humidity')" value="중단">
+        </form>
+        <!-- 습도값을 출력 -->
+        <div id="humid_message" style="font-size: 1.1em;"></div><br><br>
+        <hr>
+        <form>
+            <!-- Camera 버튼을 누르면 recognize() 함수 호출 -->
+            <input id="video" type="button" onclick="recognize()" value="Camera"></input>
+        </form>
+        <br>
+        <!-- 사진을 그린다 -->
+        <canvas id="myCanvas" width="320" height="240"></canvas>
+        <script>
+            function submit1() { // id가 'permit'인 element의 값을 permit 변수에 저장
+                var permit = document.getElementById("permit").value;
+                publish('permit', permit); // publish(topic, msg) 함수 호출
+            }
+            function start() {
+                subscribe('current'); // 'current' 토픽으로 브로커에서 msg 기다린다.
+                subscribe('possible'); // 'possible' 토픽으로 브로커에서 msg 기다린다.
+                subscribe('brightness'); // 'brightness' 토픽으로 브로커에서 msg 기다린다.
+                subscribe("congestion"); // 'congestion' 토픽으로 브로커에서 msg 기다린다.
+            }
+        </script>
+    </div>
+</body>
+</html>
