@@ -1,0 +1,89 @@
+.entire { /* entire 클래스 스타일 지정 */
+    margin: 20px;
+    padding: 20px;
+    text-align: center; /* 가운데로 위치 */
+}
+/* body 태그 스타일 지정 */
+body { 
+    background-color: linen; /* 배경화면 색깔 지정 */
+}
+/* b 태그 스타일 지정 */
+b { 
+    display: inline;
+    color: rgb(34, 93, 221);
+}
+/* hr 태그 스타일 지정 */
+hr { 
+    margin: 20px;
+}
+/* layer 클래스 스타일 지정 */
+.layer { 
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    font-size: 3em;
+    color: darkred;
+}
+/* bus id 스타일 지정 */
+#bus { 
+    font-size: 1.2em;
+}
+/* button id 스타일 지정 */
+#button { 
+    background-color: aliceblue;
+    color:darkcyan;
+    font-weight: bold;
+    width: 50px;
+    height: 30px;
+}
+/* btn 클래스 스타일 지정 */
+.btn { 
+    background-color: aliceblue;
+    color:rgba(23, 5, 182, 0.623);
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    width: 60px;
+    height: 30px;
+}
+/* start id 스타일 지정 */
+#start { 
+    background-color: lightseagreen;
+    width: 100px;
+    height: 30px;
+}
+/* permit id 스타일 지정 */
+#permit { 
+    width: 120px;
+    height: 25px;
+}
+/* possible id 스타일 지정 */
+#possible { 
+    display: inline-block;
+    border: 2px solid blue;
+    width: 50px;
+    height: 25px;
+    text-align: center;
+}
+/* current id 스타일 지정 */
+#current { 
+    display: inline-block;
+    border: 2px solid blue;
+    width: 50px;
+    height: 25px;
+    text-align: center;
+}
+/* video id 스타일 지정 */
+#video { 
+    padding: 0px;
+    border: 2px solid rgb(26, 218, 106);
+    background-color: rgb(26, 218, 106);
+    color: green;
+    font-size: 1.2em;
+    font-weight: bold;
+    width: 150px;
+    height: 25px;
+    text-align: center;
+}
